@@ -84,7 +84,7 @@ def ambil_rekomendasi_groq(status_stres, umur, jam_tidur, tekanan_ujian):
         return data_json.get("rekomendasi", [])
         
     except Exception as e:
-        print(f"❌ EROR GROQ NYATA: {e}")
+        print(f"EROR GROQ NYATA: {e}")
         return [
             "Atur jadwal tidur malam minimal 7 jam untuk memulihkan energi otak.",
             "Sempatkan istirahat 5-10 menit setiap 50 menit belajar (Teknik Pomodoro).",
