@@ -20,7 +20,7 @@ def load_ml_components():
 
 model, scaler = load_ml_components()
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 groq_client = Groq(api_key=GROQ_API_KEY)
 
 NAMA_FITUR = [
