@@ -211,5 +211,5 @@ if "api_server_active" not in st.session_state:
         payload = await request.json()
         return proses_kalkulasi_stress(payload)
 
-    threading.Thread(target=lambda: uvicorn.run(api_app, host="127.0.0.1", port=8000), daemon=True).start()
+    threading.Thread(target=lambda: uvicorn.run(api_app, host="0.0.0.0", port=8000), daemon=True).start()
     st.session_state["api_server_active"] = True
