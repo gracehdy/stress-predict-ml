@@ -72,7 +72,6 @@ def ambil_rekomendasi_groq(status_stres, umur, jam_tidur, tekanan_ujian):
         )
         
         raw_content = completion.choices[0].message.content
-        
         cleaned_content = raw_content.strip()
         if cleaned_content.startswith("```"):
             cleaned_content = cleaned_content.split("\n", 1)[1]
@@ -133,12 +132,10 @@ def proses_kalkulasi_stress(data):
     ]], dtype=np.float32)
 
     faktor_dominan = []
-
     
     if model is not None and scaler is not None:
         try:
             scaled_features = scaler.transform(raw_features)
-            
             prediction = model.predict(scaled_features)[0]
             categories = {0: "Stres Rendah (Low)", 1: "Stres Sedang (Moderate)", 2: "Stres Tinggi (High)"}
             status_terprediksi = categories.get(prediction, "Stres Sedang (Moderate)")
@@ -186,7 +183,7 @@ def proses_kalkulasi_stress(data):
         "status": str(status_terprediksi),
         "score": score_display,
         "faktorDominan": faktor_dominan[:2],
-        "rekomendasi": rekomendasi_ai
+        "rekomendasi": recommendations_ai if 'recommendations_ai' in locals() else rekomendasi_ai
     }
 
 st.title("StressPredict - Automated XGBoost Server")
@@ -214,5 +211,5 @@ if "api_server_active" not in st.session_state:
         payload = await request.json()
         return proses_kalkulasi_stress(payload)
 
-    threading.Thread(target=lambda: uvicorn.run(api_app, host="0.0.0.0", port=8000), daemon=True).start()
+    threading.Thread(target=lambda: uvicorn.run(api_app, host="127.0.0.1", port=8000), daemon=True).start()
     st.session_state["api_server_active"] = True
